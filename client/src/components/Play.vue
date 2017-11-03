@@ -8,11 +8,6 @@
         <img id="player-two" v-bind:style="{left: ((players[1].count/30000) * 100) + '%'}" :src="players[1].picture">
       </div>
     </div>
-<!--   <div id="mask">
-    <div id="countdown">
-      <h1>3</h1>
-    </div>
-  </div> -->
   </div>
 </template>
 <script>
@@ -70,6 +65,8 @@ export default {
       localStorage.clear()
       if (isFinished) {
         this.$db.ref('screamracer/room1').set(null)
+        this.$db.ref('screamracer').child('start').set(null)
+        this.$db.ref('screamracer').child('finished').set(null)
         this.$router.push('/')
       }
     })
@@ -78,18 +75,6 @@ export default {
 </script>
 
 <style lang="css">
-  #mask {
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    position: fixed;
-    left: 0;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   #myProgress {
     width: 100%;
     background-color: #ddd;
