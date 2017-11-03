@@ -44,7 +44,7 @@ export default {
       dbmeter.listen()
       dbmeter.on('sample', (dB, percent, value) => {
         let winner = null
-        if (percent > 100) {
+        if (percent > 90) {
           seth(this.players[this.playerIdx].count += percent)
 
           if (this.players[0].count >= 30000 || this.players[1].count >= 30000) {
@@ -68,11 +68,11 @@ export default {
     this.$db.ref('screamracer').child('finished').set(false)
     this.$db.ref('screamracer').on('value', snap => {
       let isFinished = snap.val().finished
-      localStorage.clear()
       if (isFinished) {
         this.$db.ref('screamracer/room1').set(null)
         this.$db.ref('screamracer').child('start').set(null)
         this.$db.ref('screamracer').child('finished').set(null)
+        localStorage.clear()
         this.$router.push('/')
       }
     })
