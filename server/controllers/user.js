@@ -6,7 +6,6 @@ const FB = require('fb');
 
 class LoginController {
     constructor() {
-        
     }
 
     static setFBAccessToken(req, res, next) {

@@ -17,7 +17,6 @@ mongoose.connect('mongodb://ogitamvan:I95i994!@cluster0-shard-00-00-tptia.mongod
     }
 })
 
-
 app.use(cors());
 
 app.use(bodyParser.json());
