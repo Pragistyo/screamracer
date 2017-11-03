@@ -34,7 +34,7 @@ export default {
   created () {
     (function (d, s, id) {
       var js
-      var fjs = d.getElementsByTagName(s)[0]
+      var fjs = d.getElementsByTagName(s)['0']
       if (d.getElementById(id)) return
       js = d.createElement(s); js.id = id
       js.src = '//connect.facebook.net/en_US/sdk.js'
@@ -43,7 +43,7 @@ export default {
 
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: '291705234665944',
+        appId: '162528727671302',
         cookie: true,  // enable cookies to allow the server to access
         xfbml: true,  // parse social plugins on this page
         version: 'v2.8' // use graph api version 2.8
@@ -58,14 +58,19 @@ export default {
         if (response.status === 'connected') {
           window.FB.api('/me', {fields: 'name,picture.type(large)'}, function (response) {
             console.log(response.name)
-            self.getPlayer(response)
-            // alert(JSON.stringify(self.dataRoom))
-            if (self.dataRoom.length === 2) {
+            if (self.dataRoom.length >= 2) {
               swal('I am Sorry', 'the room was just full', 'error')
             } else {
+              self.getPlayer(response)
+              if (self.dataRoom.length === 1) {
+                localStorage.setItem('playerKey', self.dataRoom[0]['.key'])
+                localStorage.setItem('playerIdx', '0')
+              } else {
+                localStorage.setItem('playerKey', self.dataRoom[1]['.key'])
+                localStorage.setItem('playerIdx', '1')
+              }
               self.$router.push('/room')
             }
-            // self.$router.push('/room')
           })
         }
       })
