@@ -69,11 +69,14 @@ export default {
     this.$db.ref('screamracer').on('value', snap => {
       let isFinished = snap.val().finished
       if (isFinished) {
-        this.$db.ref('screamracer/room1').set(null)
-        this.$db.ref('screamracer').child('start').set(null)
-        this.$db.ref('screamracer').child('finished').set(null)
-        localStorage.clear()
-        this.$router.push('/')
+        dbmeter.disconnect()
+        .then(() => {
+          this.$db.ref('screamracer/room1').set(null)
+          this.$db.ref('screamracer').child('start').set(null)
+          this.$db.ref('screamracer').child('finished').set(null)
+          localStorage.clear()
+          this.$router.push('/')
+        })
       }
     })
   }
