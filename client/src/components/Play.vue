@@ -44,7 +44,7 @@ export default {
       dbmeter.listen()
       dbmeter.on('sample', (dB, percent, value) => {
         let winner = null
-        if (percent > 50) {
+        if (percent > 100) {
           seth(this.players[this.playerIdx].count += percent)
 
           if (this.players[0].count >= 30000 || this.players[1].count >= 30000) {
