@@ -20,14 +20,7 @@ const db = firebaseApp.database()
 Vue.prototype.$db = db
 
 const state = {
-  Login: {
-    name: null,
-    picture: null
-  },
-  Login2: {
-    name: null,
-    picture: null
-  }
+  arrPlay: []
 }
 
 const mutations = {
@@ -38,7 +31,9 @@ const actions = {
   getPlayer ({commit}, payload) {
     Vue.prototype.$db.ref('screamracer/room1').push({
       username: payload.name,
-      picture: payload.picture.data.url
+      picture: payload.picture.data.url,
+      ready: true,
+      count: 0
     })
   }
 }

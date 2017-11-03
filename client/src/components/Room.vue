@@ -8,13 +8,14 @@
             <div class="caption text-center">
               <h3>Player {{ 1 + index }}</h3>
               <h2 class="style-font"> {{ data.username }}</h2>
-              <!-- <button type="button" name="button" class="btn btn-danger" @click="logOut(data['.key'])"> Log out</button> -->
+              <button type="button" name="button" class="btn btn-danger" @click="logOut(data['.key'])"> Log out</button>
             </div>
           </div>
         </div>
       </div>
       <div class="row text-center">
-        <button type="button" name="button" class="btn btn-info btn-lg button-style" @click="jumlahTest"> Mulai</button>
+        <button v-if="dataRoom.length ===  2" type="button" name="button" class="btn btn-info btn-lg button-style" @click="start"> Mulai
+        </button>
       </div>
     </div>
   </div>
@@ -31,18 +32,30 @@ export default {
   },
   computed: {
     ...mapState([
-      'Login'
+      'Login',
+      'arrPlay'
     ])
   },
   methods: {
-    // logOut (id) {
-    //   Vue.prototype.$db.ref('screamracer/room1/' + id).remove()
-    // },
-    jumlahTest () {
-      // alert(JSON.stringify(Vue.prototype.$db.ref('screamracer/room1')))
-      alert(JSON.stringify(this.dataRoom))
-      console.log(Vue.prototype.$db.ref('screamracer/room1'))
+    logOut (id) {
+      Vue.prototype.$db.ref('screamracer/room1/' + id).remove()
+    },
+    start () {
+      // this.$db.ref('screamracer').child('start').push('player')
+      // if (this.arrPlay.length === 2) {
+      //   this.$router.push('/play')
+      // }
+      this.$db.ref('screamracer').child('start').set(true)
+    },
+    check () {
     }
+  },
+  mounted () {
+    this.$db.ref('screamracer').child('start').set(false)
+    this.$db.ref('screamracer').on('value', snap => {
+      let isStart = snap.val().start
+      if (isStart) this.$router.push('/play')
+    })
   }
 }
 </script>
